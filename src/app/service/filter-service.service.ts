@@ -23,7 +23,7 @@ export class FilterService {
 
         //check each applied filter, based on that set isFound flag
         appliedFilters.ram.map((filterValue) => {
-          if (server.RAM.substring(0, server.RAM.indexOf('GB'))) {
+          if (server.RAM.substring(0, server.RAM.indexOf('GB')) == filterValue.substring(0, filterValue.indexOf('GB'))) {
             isFound = true;
           }
         });

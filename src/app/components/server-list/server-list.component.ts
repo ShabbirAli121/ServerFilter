@@ -15,7 +15,7 @@ export class serverListComponent implements OnInit {
   selectedLocation: string; //to store selected location
   isFilterApplied: boolean; // flag to determine filter applied or not
   page = 1; //to store current page, default is selected to 1
-  pageSize = 50; //to show number of items in a page
+  pageSize = 30; //to show number of items in a page
 
   constructor(private filterService: FilterService) { }
 
