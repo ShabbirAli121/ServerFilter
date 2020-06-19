@@ -1,0 +1,103 @@
+<div class="container">
+    <div class="row">
+        <!-- BEGIN SEARCH RESULT -->
+        <div class="col-md-12">
+            <div class="grid search">
+                <div class="grid-body">
+                    <div class="row">
+                        <!-- BEGIN FILTERS -->
+                        <div class="col-md-3">
+                            <h2 class="grid-title"><i class="fa fa-filter"></i> Filters</h2>
+                            <hr>
+                            <!-- BEGIN FILTER BY CATEGORY -->
+                            <h4>STORAGE: </h4>
+                            <div class="slidecontainer">
+                                <input type="range" min="1" max="100" value="50" class="slider" id="myRange">
+                            </div>
+                            <hr />
+                            <!-- FILTER BY RAM -->
+                            <h4>RAM:</h4>
+                            <div *ngFor="let ramValue of ramFiltersList" class="checkbox">
+                                <label><input type="checkbox" [(ngModel)]="ramValue.isChecked" class="icheck"> {{ramValue.name}}</label>
+                            </div>
+
+                            <!-- END RAM FILTER -->
+
+                            <div class="padding"></div>
+                            <hr />
+                            <!-- END FILTER BY HDD Type -->
+                            <h4>HDD Type:</h4>
+                            <div class="d-inline-block" ngbDropdown #hddTypeDrop="ngbDropdown">
+                                <button class="btn btn-outline-primary mr-2" id="dropdownHdd" ngbDropdownAnchor
+                                    (focus)="hddTypeDrop.open()">{{selectedHddType ? selectedHddType : 'Select HDD Type'}}</button>
+                                <div ngbDropdownMenu aria-labelledby="dropdownHdd">
+                                    <button *ngFor="let hddType of filters.hddType" (click)="selectedHddType = hddType" ngbDropdownItem>{{hddType}}</button>
+                                </div>
+                            </div>
+
+                            <div class="padding"></div>
+                            <hr />
+                            <!-- FILTER BY LOCATION -->
+                            <h4>Location:</h4>
+                            <div class="d-inline-block" ngbDropdown #locationDrop="ngbDropdown">
+                                <button class="btn btn-outline-primary mr-2" id="dropdownLocation" ngbDropdownAnchor
+                                    (focus)="locationDrop.open()">{{selectedLocation ? selectedLocation : 'Select Location'}}</button>
+                                <div ngbDropdownMenu aria-labelledby="dropdownLocation">
+                                    <button *ngFor="let location of filters.location" (click)="selectedLocation = location" ngbDropdownItem>{{location}}</button>
+                                </div>
+                            </div>
+                            <hr />
+                            <button class="btn btn-outline-primary mr-2" (click)="searchServers()">Apply</button>
+                            <!-- END FILTER BY LOCATION -->
+                        </div>
+                        <!-- END FILTERS -->
+                        <!-- BEGIN RESULT -->
+                        <div class="col-md-9">
+                            <h2><i class="fa fa-file-o"></i> Result</h2>
+                            <hr>
+                            <p *ngIf="isFilterApplied">Result Found {{serverList.length}} items <a title="Click to discard all filters" (click)="discardFilters()"><i class="fa fa-close"></i></a></p>                            
+
+                            <div class="padding"></div>
+
+                            <div class="row">
+                                <!-- BEGIN TABLE RESULT -->
+                                <div class="table-responsive" style="max-height: 80%;">
+                                    <table class="table table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th class="product text-left">Model</th>
+                                                <th class="number text-center">RAM</th>
+                                                <th class="number text-center">HDD</th>
+                                                <th class="number text-left">Location</th>
+                                                <th class="price text-right">Price</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr
+                                                *ngFor="let serverDetail of serverList | slice: (page-1) * pageSize : (page-1) * pageSize + pageSize">
+                                                <td><strong>{{serverDetail.Model}}</strong></td>
+                                                <td>{{serverDetail.RAM}}</td>
+                                                <td>{{serverDetail.HDD}}</td>
+                                                <td>{{serverDetail.Location}}</td>
+                                                <td class="price text-right">{{serverDetail.Price}}</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <!-- END TABLE RESULT -->
+
+                                <!-- BEGIN PAGINATION -->
+                                <ngb-pagination [(page)]="page" [pageSize]="pageSize"
+                                    [collectionSize]="serverList.length"></ngb-pagination>
+                                <!-- END PAGINATION -->
+                            </div>
+                            <!-- END RESULT -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- END SEARCH RESULT -->
+        </div>
+    </div>
